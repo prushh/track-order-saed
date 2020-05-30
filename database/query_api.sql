@@ -66,8 +66,7 @@ WHERE orders.id = <order_id> AND
 /* DEL tracking by tracking_id */
 DELETE FROM trackings WHERE trackings.id = <tracking_id>;
 
-/* Login by email and password */
-SELECT users.id
+/* Login by email */
+SELECT users.name, users.surname, users.email, users.password
 FROM users
-WHERE users.email = <email> AND
-      users.password = <psw>;
+WHERE users.email = <email>;

@@ -1,6 +1,6 @@
 <?php
 
-function openCon()
+function openConnection()
 {
     // Credentials
     $dbhost = 'localhost';
@@ -18,7 +18,7 @@ function openCon()
     return $conn;
 }
 
-function closeConn($conn)
+function closeConnection($conn)
 {
     // Close connection
     $conn->close();
