@@ -130,18 +130,10 @@ class Shipping{
         $stmt->execute();
 
         $query2 = "DELETE FROM trackings WHERE trackings.id = ". $tracking_id .";";
-        $stmt2 = $this->conn->prepare($query);
+        $stmt2 = $this->conn->prepare($query2);
         $stmt2->execute();
 
         return [$stmt,$stmt2];
     }
-    
-
-
-
-
-
-
-
 
 }
