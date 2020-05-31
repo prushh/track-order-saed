@@ -1,25 +1,29 @@
 <?php
 
-function openConnection()
+class Database
 {
     // Credentials
-    $dbhost = 'localhost';
-    $dbuser = 'root';
-    $dbpass = '';
-    $dbname = 'track_order';
+    private $servername = 'localhost';
+    private $db_name = 'track_order';
+    private $username = 'root';
+    private $password = '';
+    public $conn;
 
-    $conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    // Connection to db
+    public function openConnection()
+    {
+        try {
+            $this->conn = null;
+            $dsn = "mysql:host=$this->servername;dbname=$this->db_name";
+            $options = [
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES   => false,
+            ];
+            $this->conn = new PDO($dsn, $this->username, $this->password, $options);
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage(), (int) $e->getCode());
+        }
+        return $this->conn;
     }
-
-    return $conn;
-}
-
-function closeConnection($conn)
-{
-    // Close connection
-    $conn->close();
 }

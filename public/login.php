@@ -1,6 +1,7 @@
 <?php
 // Initialize session
-session_start();
+// session_start();
+
 
 if (isset($_SESSION['logged']) && $_SESSION['logged']) {
     if ($_SESSION['type'] == 'admin') {
@@ -12,6 +13,7 @@ if (isset($_SESSION['logged']) && $_SESSION['logged']) {
 }
 
 require_once "../database/connection.php";
+require_once "utils.php";
 
 $email = $passowrd = "";
 $err_message = "";
@@ -31,43 +33,38 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
         if ($err_message == "") {
 
-            $conn = openConnection();
+            $db = new Database();
+            $conn = $db->openConnection();
             $sql = "SELECT users.name, users.surname, users.email, users.password
                     FROM users
                     WHERE users.email = :email";
 
-            echo $conn->prepare($sql);
-
             if ($stmt = $conn->prepare($sql)) {
-                $stmt->bind_param(":email", $param_email);
+                $stmt->bindParam(":email", $param_email, PDO::PARAM_STR);
                 $param_email = strtolower($email);
 
                 if ($stmt->execute()) {
-                    if ($stmt->num_rows == 1) {
+                    if ($stmt->rowCount() == 1) {
                         if ($row = $stmt->fetch()) {
                             $name = $row['name'];
                             $surname = $row['surname'];
                             $email = $row['email'];
-                            //$hash_psw = $row['password'];
-                            $hash_psw = "887375DAEC62A9F02D32A63C9E14C7641A9A8A42E4FA8F6590EB928D9744B57BB5057A1D227E4D40EF911AC030590BBCE2BFDB78103FF0B79094CEE8425601F5";
+                            $hash_psw = $row['password'];
 
                             if (password_verify($password, $hash_psw)) {
-                                session_start();
-
                                 // Save session's variables
-                                $_SESSIONE['logged'] = true;
+                                $_SESSION['logged'] = true;
                                 $_SESSION["email"] = $email;
                                 $_SESSION['name'] = $name;
                                 $_SESSION['surname'] = $surname;
-                                if (strcmp($email, "admin@gmail.com")) {
+
+                                if (!strcmp($email, "admin@gmail.com")) {
                                     $_SESSION['type'] = 'admin';
+                                    header('Location: admin.php', true, 302);
                                 } else {
                                     $_SESSION['type'] = 'user';
+                                    header('Location: myprofile.php', true, 302);
                                 }
-
-                                $err_message = "PASSWORD CORRETTA";
-
-                                header('Location: myprofile.php', true, 302);
                                 exit(0);
                             } else {
                                 $err_message = "La password inserita non è valida.";
@@ -79,13 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 } else {
                     $err_message = "Oops! Qualcosa è andato storto. Riprova più tardi.";
                 }
-            } else {
-                //$err_message = "TERMINATO";
+
+                $stmt = null;
             }
 
-            unset($stmt);
-
-            closeConnection($conn);
+            $conn = null;
         }
     }
 }
@@ -96,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Home - Traking Tool</title>
+    <title>Login - Traking Tool</title>
     <!-- Bootstrap Framework -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -130,8 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="form-group">
                             <label class="lbl">E-mail</label>
-                            <input type="text" name="email" class="form-control" value="<?php echo $email; ?>"
-                                placeholder="E-mail">
+                            <input type="text" name="email" class="form-control" value="<?php echo $email; ?>" placeholder="E-mail">
                         </div>
                         <div class="form-group <?php echo (!empty($err_message)) ? 'has-error' : ''; ?>">
                             <label class="lbl">Password</label>
