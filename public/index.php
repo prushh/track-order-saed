@@ -23,18 +23,17 @@
 
         <header class="masthead mb-auto">
             <div class="inner">
-                <a class="navbar-brand" href="index.php">
-                    <!--<img src="img/logo.png" alt="">-->
+                <a class="home_logo" href="index.php">
+                    <img src="img/logo.png" alt="">
                 </a>
+                <h2><div class="login_title">T</div>racking <div class="login_title">T</div>ool</h2>
             </div>
         </header>
 
         <main role="main" class="inner cover">
-            <h2>Tracking Tool</h2>
             <form action="login.php">
-                <input type="submit" class="btn btn-primary" value="Login">
+                <input type="submit" class="btn btn-primary custom_login" value="Login">
             </form>
-
         </main>
 
         <footer class="mastfoot mt-auto">

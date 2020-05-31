@@ -104,32 +104,28 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 <body class="text-center">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
         <header class="masthead mb-auto">
             <div class="inner">
-                <a class="navbar-brand" href="index.php">
+                <a class="home_logo" href="index.php">
                     <img src="img/logo.png" alt="">
                 </a>
-                <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link" href="index.php">Home</a>
-                    <a class="nav-link" href="contacts.php">Contatti</a>
-                    <p class="nav-link active">Accesso clienti</p>
-                </nav>
+                <h2><div class="login_title">T</div>racking <div class="login_title">T</div>ool</h2>
             </div>
         </header>
 
         <main role="main" class="inner cover">
             <div class="wrapper">
-                <h2>Accedi</h2>
-                <p>Benvenuto, utente.<br>Inserisci le credenziali d'accesso.</p>
+                <p>Benvenuto, Inserisci le credenziali di accesso.</p>
                 <div class="frm">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="form-group">
                             <label class="lbl">E-mail</label>
-                            <input type="text" name="email" class="form-control" value="<?php echo $email; ?>" placeholder="E-mail">
+                            <input type="text" name="email" class="form-control login_cred" value="<?php echo $email; ?>" placeholder="E-mail">
                         </div>
                         <div class="form-group <?php echo (!empty($err_message)) ? 'has-error' : ''; ?>">
                             <label class="lbl">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password">
+                            <input type="password" name="password" class="form-control login_cred" placeholder="Password">
                             <span class="help block text-danger"><?php echo $err_message; ?></span>
                         </div>
                         <div class="form-group">
