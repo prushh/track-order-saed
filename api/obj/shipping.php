@@ -107,14 +107,14 @@ class Shipping{
 
     /* INSERT new tracking by order_id and tracking_id */
     public function insert_tracking($courier,$order_id){
-        $query = "INSERT INTO trackings VALUES (default, $courier, 1)
+        $query = "INSERT INTO trackings VALUES (default, $courier, 1);
                   UPDATE orders
                   SET orders.tracking_id = (
                     /* GET last id in trackings */
                     SELECT MAX(trackings.id)
                     FROM trackings
                   )
-                  WHERE orders.id = $order_id;";
+                  WHERE orders.id = " . $order_id . ";";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -135,5 +135,6 @@ class Shipping{
 
         return [$stmt,$stmt2];
     }
+
 
 }
