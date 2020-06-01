@@ -19,8 +19,8 @@ FROM orders INNER JOIN users ON orders.user_id = users.id
 WHERE orders.tracking_id IS NOT NULL;
 
 /* GET all orders without tracking_id (admin side) */
-SELECT orders.id, orders.total_cost, orders.order_date, orders.user_id,
-       users.address, users.telephone
+SELECT orders.id, orders.n_items, orders.total_cost, orders.order_date,
+       users.name, users.surname, users.email, users.address
 FROM orders INNER JOIN users ON orders.user_id = users.id
 WHERE orders.tracking_id IS NULL;
 

@@ -33,7 +33,7 @@ CREATE TABLE trackings (
 CREATE TABLE orders (
     id SMALLINT UNSIGNED AUTO_INCREMENT,
     n_items SMALLINT UNSIGNED NOT NULL,
-    total_cost SMALLINT UNSIGNED NOT NULL,
+    total_cost FLOAT UNSIGNED NOT NULL,
     order_date DATE NOT NULL,
     ship_date DATE DEFAULT NULL,
     delivery_date DATE DEFAULT NULL,
