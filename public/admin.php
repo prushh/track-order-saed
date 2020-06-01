@@ -19,7 +19,7 @@ if ($_SESSION['type'] == 'user') {
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Admin - Traking Tool</title>
+    <title>Admin</title>
     <!-- Bootstrap Framework -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -33,6 +33,15 @@ if ($_SESSION['type'] == 'user') {
 <body class="text-center">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.php">
+                <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                <span class="login_title">T</span>racking <span class="login_title">T</span>ool
+            </a>
+            <a href="logout.php" class="navbar-brand pull-right">Logout</a>
+        </nav>
+
+        <!-- Decidere se togliere header-->
         <header class="masthead mb-auto">
             <div class="inner">
                 <a class="home_logo" href="index.php">

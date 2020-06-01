@@ -1,4 +1,15 @@
 <?php
+// Initialize session
+session_start();
+
+if (isset($_SESSION['logged']) && $_SESSION['logged']) {
+    if ($_SESSION['type'] == 'admin') {
+        header('Location: admin.php', true, 307);
+    } elseif ($_SESSION['type'] == 'user') {
+        header('Location: myprofile.php', true, 307);
+    }
+    exit(0);
+}
 
 ?>
 
@@ -7,7 +18,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Home - Traking Tool</title>
+    <title>Home</title>
     <!-- Bootstrap Framework -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
