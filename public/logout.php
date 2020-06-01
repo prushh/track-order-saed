@@ -1,9 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: amir
- * Date: 30/05/2020
- * Time: 15:00
- */
+// Initialize session
+session_start();
 
-//Logout Page
+// Destroy session and variables
+session_destroy();
+
+// Redirect to index
+header('Location: index.php', true, 302);
+exit(0);
