@@ -26,7 +26,7 @@
                 <a class="home_logo" href="index.php">
                     <img src="img/logo.png" alt="">
                 </a>
-                <h2><div class="login_title">T</div>racking <div class="login_title">T</div>ool</h2>
+                <h2><span class="login_title">T</span>racking <span class="login_title">T</span>ool</h2>
             </div>
         </header>
 
