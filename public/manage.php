@@ -58,37 +58,64 @@ if ($_SESSION['type'] == 'user') {
 
                     <!-- riga da mostrare solo se non è associato un tracking -->
                     <div class="row">
-                        <div class="col-md-12 border_style">
                             <?php
                             if (isset($_GET['order_id'])) {
+                                print '<div class="col-md-12 border_style mb-5">';
                                 print "<h4 class='mb-5'>Associa un tracking all'ordine:</h4>";
                                 echo '<form action="" method="post">
                                         <div class="form-group">
-                                            <input type="text" name="email" class="form-control tracking_id" placeholder="Tracking ID">
+                                            <input type="text" name="new_tracking" class="form-control tracking_id" placeholder="Tracking ID">
                                         </div>
                                         <div class="form-group">
                                             <input type="submit" class="btn btn-primary" value="Associa">
                                         </div>
                                       </form>';
+                                print '</div>';
                             }
                             ?>
-                        </div>
                     </div>
                     <!-- fine riga inserisci -->
 
+                    <!-- da mostrare solo se esiste un tracking associato -->
                     <div class="row">
-                        <div class="col-md-12">
-                            Informazioni
-                        </div>
+                        <?php
+                        if (isset($_GET['order_id'])) {
+                            print '<div class="col-md-12 border_style mb-5">';
+                            print "<h4 class='mb-5'>Tracking associato all'ordine:</h4>";
+                            print "<h5>12341231</h5>";
+                            print '</div>';
+                        }
+                        ?>
                     </div>
+
                     <div class="row">
-                        <div class="col-md-6">
-                            Modifica
-                        </div>
-                        <div class="col-md-6">
-                            Cancella
-                        </div>
+                        <?php
+                        if (isset($_GET['order_id'])) {
+                            print '<div class="col-md-12 border_style mb-5">';
+                            print "<h4 class='mb-5'>Modifica il tracking associato all'ordine #" .htmlspecialchars($_GET['order_id']) . "</h4>";
+                            echo '<form action="" method="post">
+                                        <div class="form-group">
+                                            <input type="text" name="update_tracking" class="form-control tracking_id" placeholder="Nuovo Tracking ID">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-primary" value="Aggiorna">
+                                        </div>
+                                      </form>';
+                            print '</div>';
+
+                            print '<div class="col-md-12 border_style mb-5">';
+                            print "<h4 class='mb-5'>Elimina il tracking dell'ordine:</h4>";
+                            echo '<form action="" method="post">
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-primary" value="Elimina">
+                                            <br>(Azione non reversibile)
+                                        </div>
+                                      </form>';
+                            print '</div>';
+                        }
+                        ?>
                     </div>
+                    <!-- fine sezione tracking -->
                 </div>
 
             </div>
