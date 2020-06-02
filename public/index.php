@@ -26,7 +26,7 @@ if (isset($_SESSION['logged']) && $_SESSION['logged']) {
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="img/favicon.ico?v=1" type="image/x-icon">
 </head>
 
 <body class="text-center">
