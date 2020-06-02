@@ -33,7 +33,7 @@ if ($_SESSION['type'] == 'user') {
 <body class="text-center">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
-        <nav class="navbar navbar-dark bg-dark">
+        <nav class="navbar navbar-dark bg-dark mb-5">
             <a class="navbar-brand" href="index.php">
                 <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                 <span class="login_title">T</span>racking <span class="login_title">T</span>ool
@@ -44,15 +44,53 @@ if ($_SESSION['type'] == 'user') {
         <main role="main" class="inner cover">
             <div class="wrapper">
 
-                <div class="page-header">
+                <div class="page-header mb-3">
                     <?php
                         if (isset($_GET['order_id'])) {
-                            print "<b><h1>Gestisci ordine n.".htmlspecialchars($_GET['order_id'])."</h1></b>";
+                            print "<b><h1>Gestisci Ordine #".htmlspecialchars($_GET['order_id'])."</h1></b>";
                         }else{
                             print "<b><h1>Nessun ordine selezionato...</h1></b>";
                         }
                     ?>
                 </div>
+
+                <div class="container">
+
+                    <!-- riga da mostrare solo se non è associato un tracking -->
+                    <div class="row">
+                        <div class="col-md-12 border_style">
+                            <?php
+                            if (isset($_GET['order_id'])) {
+                                print "<h4 class='mb-5'>Associa un tracking all'ordine:</h4>";
+                                echo '<form action="" method="post">
+                                        <div class="form-group">
+                                            <input type="text" name="email" class="form-control tracking_id" placeholder="Tracking ID">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-primary" value="Associa">
+                                        </div>
+                                      </form>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <!-- fine riga inserisci -->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            Informazioni
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            Modifica
+                        </div>
+                        <div class="col-md-6">
+                            Cancella
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
 

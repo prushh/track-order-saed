@@ -60,3 +60,13 @@ body {
     width: 30%;
     margin: 0 auto;
 }
+
+.border_style{
+    border: 1px solid black;
+    padding: 50px;
+    border-radius: 50px;
+}
+.tracking_id{
+    width: 15%;
+    margin: 0 auto;
+}

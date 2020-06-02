@@ -5,8 +5,8 @@ class Database
     // Credentials
     private $servername = 'localhost';
     private $db_name = 'track_order';
-    private $username = 'root';
-    private $password = '';
+    private $username = 'admin';
+    private $password = 'admin';
     public $conn;
 
     // Connection to db

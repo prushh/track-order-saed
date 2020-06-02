@@ -33,7 +33,7 @@ if ($_SESSION['type'] == 'user') {
 <body class="text-center">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
-        <nav class="navbar navbar-dark bg-dark">
+        <nav class="navbar navbar-dark bg-dark mb-5">
             <a class="navbar-brand" href="index.php">
                 <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                 <span class="login_title">T</span>racking <span class="login_title">T</span>ool
@@ -41,23 +41,11 @@ if ($_SESSION['type'] == 'user') {
             <a href="logout.php" class="navbar-brand pull-right">Logout</a>
         </nav>
 
-        <!-- Decidere se togliere header-->
-        <header class="masthead mb-auto">
-            <div class="inner">
-                <a class="home_logo" href="index.php">
-                    <img src="img/logo.png" alt="">
-                </a>
-                <h2>
-                    <span class="login_title">T</span>racking <span class="login_title">T</span>ool
-                </h2>
-            </div>
-        </header>
-
         <main role="main" class="inner cover">
             <div class="wrapper">
 
                 <div class="page-header">
-                    <h1>Benvenuto
+                    <h1>Dashboard
                         <b><?php echo htmlspecialchars($_SESSION['name']); ?></b>
                     </h1>
                 </div>
