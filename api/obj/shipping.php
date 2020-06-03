@@ -66,14 +66,6 @@ class Shipping{
         return $stmt;
     }
 
-    /* GET all title for status (fill combobox) */
-    public function get_all_status(){
-        $query = "SELECT status.id, status.title, status.description FROM status;";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
-    }
-
     /* UPDATE status for trackings by tracking_id and status_id */
     public function update_tracking($status_id,$tracking_id){
         $query = "UPDATE trackings
