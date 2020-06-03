@@ -15,27 +15,6 @@ class Shipping{
         $this->conn = $db;
     }
 
-    /* GET all orders by user_id */
-    public function get_all_orders_user_id($user_id){
-        $query = "SELECT orders.id, orders.total_cost, orders.order_date 
-                  FROM orders 
-                  WHERE orders.user_id = ". $user_id .";";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
-    }
-
-    /* GET all orders with tracking_id by user_id */
-    public function get_all_orders_with_tracking_user_id($user_id){
-        $query = "SELECT orders.id, orders.total_cost, orders.order_date
-                  FROM orders
-                  WHERE orders.user_id = " . $user_id . "
-                  AND orders.tracking_id IS NOT NULL;";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
-    }
-
     /* GET all orders with tracking_id (admin side) */
     public function get_all_orders_with_tracking_admin(){
         $query = "SELECT orders.id, orders.total_cost, orders.order_date, orders.ship_date,
