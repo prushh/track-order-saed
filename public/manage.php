@@ -24,6 +24,8 @@ if ($_SESSION['type'] == 'user') {
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <!-- For Ajax -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- Favicon -->
@@ -46,12 +48,30 @@ if ($_SESSION['type'] == 'user') {
             <div class="wrapper">
 
                 <div class="page-header mb-3">
+                    <!-- Call API, frontend example -->
+                    <script>
+                        $(document).ready(function() {
+                            var api_url = "http://localhost/track-orders-saed/api/tracking/get.php"
+                            $.ajax({
+                                url: api_url,
+                                type: "GET",
+                                contentType: "application/json",
+                                dataType: 'json',
+                                success: function(result) {
+                                    console.log(result);
+                                },
+                                error: function(error) {
+                                    console.log(error);
+                                }
+                            })
+                        });
+                    </script>
                     <?php
-                        if (isset($_GET['order_id'])) {
-                            print "<b><h1>Gestisci Ordine #".htmlspecialchars($_GET['order_id'])."</h1></b>";
-                        }else{
-                            print "<b><h1>Nessun ordine selezionato...</h1></b>";
-                        }
+                    if (isset($_GET['order_id'])) {
+                        print "<b><h1>Gestisci Ordine #" . htmlspecialchars($_GET['order_id']) . "</h1></b>";
+                    } else {
+                        print "<b><h1>Nessun ordine selezionato...</h1></b>";
+                    }
                     ?>
                 </div>
 
@@ -60,24 +80,24 @@ if ($_SESSION['type'] == 'user') {
                     <!-- NO TRACKING -->
                     <div class="row">
                         <?php
-                            if (isset($_GET['order_id']) && !isset($_GET['tracking_id'])) {
-                                print "<div class='col-md-12 mb-5'>";
-                                print "<h4 class='mb-5'>Associa Tracking</h4>";
-                                print "<form action='' method='post'>
+                        if (isset($_GET['order_id']) && !isset($_GET['tracking_id'])) {
+                            print "<div class='col-md-12 mb-5'>";
+                            print "<h4 class='mb-5'>Associa Tracking</h4>";
+                            print "<form action='' method='post'>
                                         <div class='form-group'>";
-                                //foreach () {
-                                print "<input name='gruppo1' type='radio' id='radio1'>
+                            //foreach () {
+                            print "<input name='gruppo1' type='radio' id='radio1'>
                                        <label for='radio1'>12345</label><br>
                                        <input name='gruppo1' type='radio' id='radio2'>
                                        <label for='radio2'>12345</label>";
 
-                                //}
-                                print "<br><br><input type='submit' class='btn btn-primary' value='Associa' style='width:30%;'>
+                            //}
+                            print "<br><br><input type='submit' class='btn btn-primary' value='Associa' style='width:30%;'>
                                        </div>
                                       </form>";
-                                print "</div>";
-                            }
-                            ?>
+                            print "</div>";
+                        }
+                        ?>
                     </div>
 
                     <!-- WITH TRACKING -->
@@ -102,7 +122,7 @@ if ($_SESSION['type'] == 'user') {
                             }
                             print "</div>";
                             print '<div class="col-md-6 text-left">';
-                            print "Numero Tracking: <h5 style='display: inline-block'>".$_GET['tracking_id']."</h5><br>";
+                            print "Numero Tracking: <h5 style='display: inline-block'>" . $_GET['tracking_id'] . "</h5><br>";
                             print "Corriere: <h5 style='display: inline-block'>BRT</h5><br>";
                             print "Stato della Spedizione: <h5 style='display: inline-block'>Spedito</h5><br><br>";
                             print "Dettagli: <h5>La spedizione è stata assegnata al corriere.</h5><br>";
@@ -143,7 +163,7 @@ if ($_SESSION['type'] == 'user') {
                         }
                         ?>
                     </div>
-            </div>
+                </div>
         </main>
 
         <footer class="mastfoot mt-auto">

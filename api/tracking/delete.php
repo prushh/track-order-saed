@@ -21,22 +21,15 @@ $tracking = new Tracking($conn);
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (
-    !empty($data->id) &&
-    !empty($data->courier) &&
-    !empty($data->status_id)
-) {
+if (!empty($data->id)) {
     $tracking->id = $data->id;
-    $tracking->courier = $data->courier;
-    $tracking->status_id = $data->status_id;
 
-
-    if ($tracking->add()) {
-        http_response_code(201);
-        echo json_encode(array("message" => "Tracking aggiunto."));
+    if ($tracking->delete()) {
+        http_response_code(200);
+        echo json_encode(array("message" => "Tracking eliminato."));
     } else {
         http_response_code(503);
-        echo json_encode(array("message" => "Errore di connessione."));
+        echo json_encode(array("message" => "Tracking inesistente o protetto."));
     }
 } else {
     bad_request();
