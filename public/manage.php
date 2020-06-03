@@ -31,6 +31,7 @@ if ($_SESSION['type'] == 'user') {
 </head>
 
 <body class="text-center">
+
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
         <nav class="navbar navbar-dark bg-dark mb-5">
@@ -55,40 +56,67 @@ if ($_SESSION['type'] == 'user') {
                 </div>
 
                 <div class="container">
+
+                    <!-- NO TRACKING -->
                     <div class="row">
                         <?php
                             if (isset($_GET['order_id']) && !isset($_GET['tracking_id'])) {
-                                print "<div class='col-md-12 border_style mb-5'>";
-                                print "<h4 class='mb-5'>Associa un tracking all'ordine:</h4>";
+                                print "<div class='col-md-12 mb-5'>";
+                                print "<h4 class='mb-5'>Associa Tracking</h4>";
                                 print "<form action='' method='post'>
-                                        <div class='form-group'>
-                                            <input type='text' name='new_tracking' class='form-control tracking_id' placeholder='Tracking ID'>
-                                        </div>
-                                        <div class='form-group'>
-                                            <input type='submit' class='btn btn-primary' value='Associa'>
-                                        </div>
+                                        <div class='form-group'>";
+                                //foreach () {
+                                print "<input name='gruppo1' type='radio' id='radio1'>
+                                       <label for='radio1'>12345</label><br>
+                                       <input name='gruppo1' type='radio' id='radio2'>
+                                       <label for='radio2'>12345</label>";
+
+                                //}
+                                print "<br><br><input type='submit' class='btn btn-primary' value='Associa' style='width:30%;'>
+                                       </div>
                                       </form>";
                                 print "</div>";
                             }
                             ?>
                     </div>
 
-                    <div class="row">
+                    <!-- WITH TRACKING -->
+                    <div class="row row_style">
                         <?php
                         if (isset($_GET['order_id']) && isset($_GET['tracking_id'])) {
-                            print '<div class="col-md-12 border_style mb-5">';
-                            print "<h4 class='mb-5'>Tracking associato all'ordine:</h4>";
-                            print "<h5>".$_GET['tracking_id']."</h5>";
+                            print "<div class='col-md-6'>";
+                            $corriere = "GLS";
+                            switch ($corriere) {
+                                case "BRT":
+                                    print "<img src='img/brt.png' width='250px'>";
+                                    break;
+                                case "DHL":
+                                    print "<img src='img/dhl.png' width='350px'>";
+                                    break;
+                                case "SDA":
+                                    print "<img src='img/sda.png' width='350px'>";
+                                    break;
+                                case "GLS":
+                                    print "<img src='img/gls.png' width='230px'>";
+                                    break;
+                            }
+                            print "</div>";
+                            print '<div class="col-md-6 text-left">';
+                            print "Numero Tracking: <h5 style='display: inline-block'>".$_GET['tracking_id']."</h5><br>";
+                            print "Corriere: <h5 style='display: inline-block'>BRT</h5><br>";
+                            print "Stato della Spedizione: <h5 style='display: inline-block'>Spedito</h5><br><br>";
+                            print "Dettagli: <h5>La spedizione è stata assegnata al corriere.</h5><br>";
+
                             print '</div>';
                         }
                         ?>
                     </div>
 
-                    <div class="row">
+                    <div class="row row_style">
                         <?php
                         if (isset($_GET['order_id']) && isset($_GET['tracking_id'])) {
-                            print "<div class='col-md-12 border_style mb-5'>";
-                            print "<h4 class='mb-5'>Modifica il tracking associato all'ordine #" .htmlspecialchars($_GET['order_id']) . "</h4>";
+                            print "<div class='col-md-6 mb-5'>";
+                            print "<h4 class='mb-5'>Modifca Tracking</h4>";
                             print "<form action='' method='post'>
                                         <div class='form-group'>
                                             <input type='text' name='update_tracking' class='form-control tracking_id' placeholder='Nuovo Tracking ID'>
@@ -98,9 +126,13 @@ if ($_SESSION['type'] == 'user') {
                                         </div>
                                       </form>";
                             print "</div>";
+                        }
+                        ?>
 
-                            print "<div class='col-md-12 border_style mb-5'>";
-                            print "<h4 class='mb-5'>Elimina il tracking dell'ordine:</h4>";
+                        <?php
+                        if (isset($_GET['order_id']) && isset($_GET['tracking_id'])) {
+                            print "<div class='col-md-6 mb-5'>";
+                            print "<h4 class='mb-5'>Elimina Tracking</h4>";
                             print "<form action='' method='post'>
                                         <div class='form-group'>
                                             <input type='submit' class='btn btn-primary' value='Elimina'>
@@ -111,8 +143,6 @@ if ($_SESSION['type'] == 'user') {
                         }
                         ?>
                     </div>
-                </div>
-
             </div>
         </main>
 
@@ -122,7 +152,6 @@ if ($_SESSION['type'] == 'user') {
             </div>
         </footer>
     </div>
-
 
 </body>
 

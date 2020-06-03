@@ -76,12 +76,12 @@ if ($_SESSION['type'] == 'user') {
                     print "<table class='table table-dark'>";
                     print "<thead>";
                     print "<tr>";
-                    print "<th scope='col'>ID Ordine</th>";
+                    print "<th scope='col'>Ordine</th>";
                     print "<th>Effettuato il</th>";
-                    print "<th>ID Tracking</th>";
-                    print "<th>N.Articoli</th>";
-                    print "<th>Costo totale (€)</th>";
-                    print "<th>Utente</th>";
+                    print "<th>Tracking</th>";
+                    print "<th>N° Articoli</th>";
+                    print "<th>Totale</th>";
+                    print "<th>Cliente</th>";
                     print "<th>E-mail</th>";
                     print "<th>Indirizzo</th>";
                     print "<th></th>";
@@ -103,7 +103,7 @@ if ($_SESSION['type'] == 'user') {
                             $link = 'manage.php?order_id='.$obj->id.'&tracking_id='.$obj->tracking_id;
                         }
                         print "<td>".$obj->n_items."</td>";
-                        print "<td>".$obj->total_cost."</td>";
+                        print "<td>€ ".number_format($obj->total_cost,2)."</td>";
                         print "<td>".$obj->name." ".$obj->surname."</td>";
                         print "<td>".$obj->email."</td>";
                         print "<td>".$obj->address."</td>";
