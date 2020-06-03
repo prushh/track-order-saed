@@ -55,11 +55,9 @@ if ($_SESSION['type'] == 'user') {
                 </div>
 
                 <div class="container">
-
-                    <!-- riga da mostrare solo se non è associato un tracking -->
                     <div class="row">
                         <?php
-                            if (isset($_GET['order_id'])) {
+                            if (isset($_GET['order_id']) && !isset($_GET['tracking_id'])) {
                                 print "<div class='col-md-12 border_style mb-5'>";
                                 print "<h4 class='mb-5'>Associa un tracking all'ordine:</h4>";
                                 print "<form action='' method='post'>
@@ -74,15 +72,13 @@ if ($_SESSION['type'] == 'user') {
                             }
                             ?>
                     </div>
-                    <!-- fine riga inserisci -->
 
-                    <!-- da mostrare solo se esiste un tracking associato -->
                     <div class="row">
                         <?php
-                        if (isset($_GET['order_id'])) {
+                        if (isset($_GET['order_id']) && isset($_GET['tracking_id'])) {
                             print '<div class="col-md-12 border_style mb-5">';
                             print "<h4 class='mb-5'>Tracking associato all'ordine:</h4>";
-                            print "<h5>12341231</h5>";
+                            print "<h5>".$_GET['tracking_id']."</h5>";
                             print '</div>';
                         }
                         ?>
@@ -90,7 +86,7 @@ if ($_SESSION['type'] == 'user') {
 
                     <div class="row">
                         <?php
-                        if (isset($_GET['order_id'])) {
+                        if (isset($_GET['order_id']) && isset($_GET['tracking_id'])) {
                             print "<div class='col-md-12 border_style mb-5'>";
                             print "<h4 class='mb-5'>Modifica il tracking associato all'ordine #" .htmlspecialchars($_GET['order_id']) . "</h4>";
                             print "<form action='' method='post'>
@@ -115,7 +111,6 @@ if ($_SESSION['type'] == 'user') {
                         }
                         ?>
                     </div>
-                    <!-- fine sezione tracking -->
                 </div>
 
             </div>

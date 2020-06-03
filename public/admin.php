@@ -58,9 +58,8 @@ if ($_SESSION['type'] == 'user') {
                     $conn = $db->openConnection();
 
                     $sql = "SELECT orders.id, orders.n_items, orders.total_cost, orders.order_date,
-                                   users.name, users.surname, users.email, users.address
-                            FROM orders INNER JOIN users ON orders.user_id = users.id
-                            WHERE orders.tracking_id IS NULL;";
+                                   users.name, users.surname, users.email, users.address, orders.tracking_id
+                            FROM orders INNER JOIN users ON orders.user_id = users.id;";
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
 
@@ -79,6 +78,7 @@ if ($_SESSION['type'] == 'user') {
                     print "<tr>";
                     print "<th scope='col'>ID Ordine</th>";
                     print "<th>Effettuato il</th>";
+                    print "<th>ID Tracking</th>";
                     print "<th>N.Articoli</th>";
                     print "<th>Costo totale (€)</th>";
                     print "<th>Utente</th>";
@@ -88,16 +88,26 @@ if ($_SESSION['type'] == 'user') {
                     print "</tr>";
                     print "</thead>";
                     print "<tbody>";
+
+                    $link = '';
+
                     foreach ($arr as $key => $obj) {
                         print "<tr>";
                         print "<th scope='row'>".$obj->id."</th>";
                         print "<td>".$obj->order_date."</td>";
+                        if($obj->tracking_id === NULL){
+                            print "<td>-</td>";
+                            $link = 'manage.php?order_id='.$obj->id;
+                        }else{
+                            print "<td>".$obj->tracking_id."</td>";
+                            $link = 'manage.php?order_id='.$obj->id.'&tracking_id='.$obj->tracking_id;
+                        }
                         print "<td>".$obj->n_items."</td>";
                         print "<td>".$obj->total_cost."</td>";
                         print "<td>".$obj->name." ".$obj->surname."</td>";
                         print "<td>".$obj->email."</td>";
                         print "<td>".$obj->address."</td>";
-                        print "<td><a href='manage.php?order_id=".$obj->id."' class='btn btn-primary'>Gestisci</a></td>";
+                        print "<td><a href='$link' class='btn btn-primary'>Gestisci</a></td>";
                         print "<tr>";
                     }
                     print "</tbody>";
