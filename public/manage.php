@@ -63,8 +63,19 @@ require_once "utils.php";
                     <?php
                     if (isset($_GET['order_id']) && !isset($_GET['tracking_id'])) {
                         print "<div class='row'>";
+
                         print "<div class='col-md-12 mb-5'>";
-                        print "<h4 class='mb-5'>Associa Tracking</h4>";
+                        print "<h4 class='mb-5'>Crea Nuovo Tracking</h4>";
+                        print "<form action='' method='post'>
+                                   <div class='form-group'>";
+                        print "<input type='text' name='create_tracking' class='form-control tracking_id' placeholder='Tracking ID'>";
+                        print "<br><input type='submit' class='btn btn-primary' value='Crea' style='width:30%;'>
+                                   </div>
+                                   </form>";
+                        print "</div>";
+
+                        print "<div class='col-md-12 mb-5'>";
+                        print "<h4 class='mb-5'>Associa Tracking Esistente</h4>";
                         print "<form action='' method='post'>
                                         <div class='form-group'>";
                         //foreach () {
