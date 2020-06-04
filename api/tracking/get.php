@@ -16,7 +16,17 @@ $conn = $db->openConnection();
 
 $tracking = new Tracking($conn);
 
-$stmt = $tracking->get_all();
+$stmt = NULL;
+
+if (isset($_GET['tracking_id'])) {
+    if (!empty($_GET['tracking_id'])) {
+        $stmt = $tracking->get_track_with_status_info($_GET['tracking_id']);
+    } else {
+        bad_request();
+    }
+} else {
+    $stmt = $tracking->get_all();
+}
 
 if ($stmt->rowCount() > 0) {
 
@@ -26,11 +36,22 @@ if ($stmt->rowCount() > 0) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
+
+
         $tracking_item = array(
             "id" => $id,
             "courier" => $courier,
             "status_id" => $status_id
         );
+
+        if (isset($_GET['tracking_id'])) {
+            $status_item = array(
+                "title" => $title,
+                "description" => $description
+            );
+
+            $tracking_item = array_merge($tracking_item, $status_item);
+        }
 
         array_push($tracking_arr["results"], $tracking_item);
     }
@@ -40,5 +61,5 @@ if ($stmt->rowCount() > 0) {
     print json_encode($tracking_arr);
 } else {
     http_response_code(404);
-    echo json_encode(array("message" => "Nessun tracking trovato"));
+    print json_encode(array("message" => "Nessun tracking trovato"));
 }

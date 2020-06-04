@@ -60,7 +60,7 @@ if ($stmt->rowCount() > 0) {
                 "name" => $name,
                 "surname" => $surname,
                 "email" => $email,
-                "address" => $address,
+                "address" => $address
             );
 
             $order_item = array_merge($order_item, $user_item);
@@ -74,5 +74,5 @@ if ($stmt->rowCount() > 0) {
     print json_encode($order_arr);
 } else {
     http_response_code(404);
-    echo json_encode(array("message" => "Nessun ordine trovato"));
+    print json_encode(array("message" => "Nessun ordine trovato"));
 }

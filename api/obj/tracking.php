@@ -7,6 +7,9 @@ class Tracking
     public $id;
     public $courier;
     public $status_id;
+    // status's fields
+    public $title;
+    public $description;
 
     public function __construct($db)
     {
@@ -18,6 +21,18 @@ class Tracking
     {
         $query = "SELECT *
                   FROM " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    /* GET tracking with status information */
+    public function get_track_with_status_info($tracking_id)
+    {
+        $query = "SELECT *
+                  FROM " . $this->table_name . " INNER JOIN status ON status_id = status.id
+                  WHERE " . $this->table_name . ".id = " . $tracking_id;
+
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;

@@ -50,5 +50,5 @@ if ($stmt->rowCount() > 0) {
     print json_encode($status_arr);
 } else {
     http_response_code(404);
-    echo json_encode(array("message" => "Nessun status trovato"));
+    print json_encode(array("message" => "Nessun status trovato"));
 }
