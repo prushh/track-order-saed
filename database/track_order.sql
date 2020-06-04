@@ -41,7 +41,7 @@ CREATE TABLE orders (
     tracking_id SMALLINT UNSIGNED UNIQUE,
     PRIMARY KEY(id),
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (tracking_id) REFERENCES trackings(id)
+    FOREIGN KEY (tracking_id) REFERENCES trackings(id) ON DELETE SET NULL
 );
 
 /* Insert users table, PASSWORD_ARGON2I of lowercase(name) field */
