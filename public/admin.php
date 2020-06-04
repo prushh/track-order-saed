@@ -12,6 +12,8 @@ if ($_SESSION['type'] == 'user') {
     exit(0);
 }
 
+require_once "utils.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -50,28 +52,11 @@ if ($_SESSION['type'] == 'user') {
                     </h1>
                 </div>
                 <?php
-                    // Simulation of API request
-                    require_once "../database/connection.php";
-                    require_once "utils.php";
+                $arr = json_decode(curl_api("GET", "http://localhost/track-orders-saed/api/order/get.php?token=1"));
 
-                    $db = new Database();
-                    $conn = $db->openConnection();
-
-                    $sql = "SELECT orders.id, orders.n_items, orders.total_cost, orders.order_date,
-                                   users.name, users.surname, users.email, users.address, orders.tracking_id
-                            FROM orders INNER JOIN users ON orders.user_id = users.id;";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->execute();
-
-                    while($row = $stmt->fetch()) {
-                        $result[] = $row;
-                    }
-                    
-                    $json = json_encode($result);
-                    // End simulation, parsing JSON response
-
-                    $arr = json_decode($json);
-
+                if (isset($arr->message)) {
+                    print $arr->message;
+                } else {
                     print "<table class='table'>";
                     print "<table class='table table-dark'>";
                     print "<thead>";
@@ -91,27 +76,28 @@ if ($_SESSION['type'] == 'user') {
 
                     $link = '';
 
-                    foreach ($arr as $key => $obj) {
+                    foreach ($arr->results as $key => $obj) {
                         print "<tr>";
-                        print "<th scope='row'>".$obj->id."</th>";
-                        print "<td>".$obj->order_date."</td>";
-                        if($obj->tracking_id === NULL){
+                        print "<th scope='row'>" . $obj->id . "</th>";
+                        print "<td>" . $obj->order_date . "</td>";
+                        if ($obj->tracking_id === NULL) {
                             print "<td>-</td>";
-                            $link = 'manage.php?order_id='.$obj->id;
-                        }else{
-                            print "<td>".$obj->tracking_id."</td>";
-                            $link = 'manage.php?order_id='.$obj->id.'&tracking_id='.$obj->tracking_id;
+                            $link = 'manage.php?order_id=' . $obj->id;
+                        } else {
+                            print "<td>" . $obj->tracking_id . "</td>";
+                            $link = 'manage.php?order_id=' . $obj->id . '&tracking_id=' . $obj->tracking_id;
                         }
-                        print "<td>".$obj->n_items."</td>";
-                        print "<td>€ ".number_format($obj->total_cost,2)."</td>";
-                        print "<td>".$obj->name." ".$obj->surname."</td>";
-                        print "<td>".$obj->email."</td>";
-                        print "<td>".$obj->address."</td>";
+                        print "<td>" . $obj->n_items . "</td>";
+                        print "<td>€ " . number_format($obj->total_cost, 2) . "</td>";
+                        print "<td>" . $obj->name . " " . $obj->surname . "</td>";
+                        print "<td>" . $obj->email . "</td>";
+                        print "<td>" . $obj->address . "</td>";
                         print "<td><a href='$link' class='btn btn-primary'>Gestisci</a></td>";
                         print "<tr>";
                     }
                     print "</tbody>";
                     print "</table></table>";
+                }
 
                 ?>
             </div>

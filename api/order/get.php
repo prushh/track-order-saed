@@ -19,9 +19,16 @@ $order = new Order($conn);
 $stmt = NULL;
 
 // Pensare come gestire le query con più tabelle coinvolte
-if (isset($_GET['user_id'])) {
+if (isset($_GET['user_id']) && !isset($_GET['token'])) {
     if (!empty($_GET['user_id'])) {
         $stmt = $order->get_all_by_user_id($_GET['user_id']);
+    } else {
+        bad_request();
+    }
+} else if (isset($_GET['token'])) {
+    if (!empty($_GET['token'])) {
+        // Simulate token
+        $stmt = $order->get_all_with_user_info();
     } else {
         bad_request();
     }
@@ -47,6 +54,17 @@ if ($stmt->rowCount() > 0) {
             "user_id" => $user_id,
             "tracking_id" => $tracking_id
         );
+
+        if (isset($_GET['token'])) {
+            $user_item = array(
+                "name" => $name,
+                "surname" => $surname,
+                "email" => $email,
+                "address" => $address,
+            );
+
+            $order_item = array_merge($order_item, $user_item);
+        }
 
         array_push($order_arr["results"], $order_item);
     }

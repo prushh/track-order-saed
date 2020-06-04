@@ -12,6 +12,11 @@ class Order
     public $delivery_date;
     public $user_id;
     public $tracking_id;
+    // user's fields
+    public $name;
+    public $surname;
+    public $email;
+    public $address;
 
     public function __construct($db)
     {
@@ -42,10 +47,20 @@ class Order
     /* GET all orders with tracking_id by user_id */
     public function get_all_with_track_by_user_id($user_id)
     {
-        $query = "SELECT orders.id, orders.total_cost, orders.order_date
+        $query = "SELECT *
                   FROM " . $this->table_name . "
                   WHERE orders.user_id = " . $user_id . " AND
                         orders.tracking_id IS NOT NULL;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    /* GET all orders with user information */
+    public function get_all_with_user_info()
+    {
+        $query = "SELECT *
+                  FROM " . $this->table_name . " INNER JOIN users ON user_id = users.id;";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
