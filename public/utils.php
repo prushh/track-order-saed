@@ -24,8 +24,6 @@ function _debug_dump($var, $die = true)
 
 
 // ** CURL ** //
-// Method: POST, PUT, GET etc
-// Data: array("param" => "value") ==> index.php?param=value
 function curl_api($method, $url, $data = false)
 {
     $curl = curl_init();
@@ -35,7 +33,7 @@ function curl_api($method, $url, $data = false)
             curl_setopt($curl, CURLOPT_POST, 1);
 
             if ($data)
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
             break;
         case "PUT":
             curl_setopt($curl, CURLOPT_PUT, 1);
@@ -56,35 +54,4 @@ function curl_api($method, $url, $data = false)
     curl_close($curl);
 
     return $result;
-}
-
-// Decidere se utilizzare curl_api o queste
-function curl_get($url)
-{
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_URL => $url
-    ]);
-    $result = curl_exec($ch);
-    curl_close($ch);
-    return $result;
-}
-
-function curl_post($url, $array_data)
-{
-    $additional_headers = array(
-        'Accept: application/json',
-        'Content-Type: application/json'
-    );
-    $ch = curl_init($url);
-    curl_setopt_array($ch, [
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => json_encode($array_data),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HTTPHEADER => $additional_headers
-    ]);
-    $response = curl_exec($ch);
-    curl_close($ch);
-    return json_decode($response);
 }

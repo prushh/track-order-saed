@@ -12,6 +12,8 @@ if ($_SESSION['type'] == 'user') {
     exit(0);
 }
 
+require_once "utils.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -24,8 +26,6 @@ if ($_SESSION['type'] == 'user') {
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <!-- For Ajax -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <!-- Favicon -->
@@ -48,24 +48,6 @@ if ($_SESSION['type'] == 'user') {
             <div class="wrapper">
 
                 <div class="page-header mb-3">
-                    <!-- Call API, frontend example -->
-                    <script>
-                        $(document).ready(function() {
-                            var api_url = "http://localhost/track-orders-saed/api/tracking/get.php"
-                            $.ajax({
-                                url: api_url,
-                                type: "GET",
-                                contentType: "application/json",
-                                dataType: 'json',
-                                success: function(result) {
-                                    console.log(result);
-                                },
-                                error: function(error) {
-                                    console.log(error);
-                                }
-                            })
-                        });
-                    </script>
                     <?php
                     if (isset($_GET['order_id'])) {
                         print "<b><h1>Gestisci Ordine #" . htmlspecialchars($_GET['order_id']) . "</h1></b>";
@@ -78,35 +60,41 @@ if ($_SESSION['type'] == 'user') {
                 <div class="container">
 
                     <!-- NO TRACKING -->
-                    <div class="row">
-                        <?php
-                        if (isset($_GET['order_id']) && !isset($_GET['tracking_id'])) {
-                            print "<div class='col-md-12 mb-5'>";
-                            print "<h4 class='mb-5'>Associa Tracking</h4>";
-                            print "<form action='' method='post'>
+                    <?php
+                    if (isset($_GET['order_id']) && !isset($_GET['tracking_id'])) {
+                        print "<div class='row'>";
+                        print "<div class='col-md-12 mb-5'>";
+                        print "<h4 class='mb-5'>Associa Tracking</h4>";
+                        print "<form action='' method='post'>
                                         <div class='form-group'>";
-                            //foreach () {
-                            print "<input name='gruppo1' type='radio' id='radio1'>
+                        //foreach () {
+                        print "<input name='gruppo1' type='radio' id='radio1'>
                                        <label for='radio1'>12345</label><br>
                                        <input name='gruppo1' type='radio' id='radio2'>
                                        <label for='radio2'>12345</label>";
 
-                            //}
-                            print "<br><br><input type='submit' class='btn btn-primary' value='Associa' style='width:30%;'>
+                        //}
+                        print "<br><br><input type='submit' class='btn btn-primary' value='Associa' style='width:30%;'>
                                        </div>
                                       </form>";
-                            print "</div>";
-                        }
-                        ?>
-                    </div>
+                        print "</div>";
+                        print "</div>";
+                    }
+                    ?>
 
                     <!-- WITH TRACKING -->
-                    <div class="row row_style">
-                        <?php
-                        if (isset($_GET['order_id']) && isset($_GET['tracking_id'])) {
+                    <?php
+                    if (isset($_GET['order_id']) && isset($_GET['tracking_id'])) {
+
+                        $arr = json_decode(curl_api("GET", "http://localhost/track-order-saed/api/tracking/get.php?tracking_id=" . $_GET['tracking_id']));
+                        $obj = $arr->results[0];
+
+                        if (isset($arr->message)) {
+                            print $arr->message;
+                        } else {
+                            print "<div class='row row_style'>";
                             print "<div class='col-md-6'>";
-                            $corriere = "GLS";
-                            switch ($corriere) {
+                            switch ($obj->courier) {
                                 case "BRT":
                                     print "<img src='img/brt.png' width='250px'>";
                                     break;
@@ -123,46 +111,22 @@ if ($_SESSION['type'] == 'user') {
                             print "</div>";
                             print '<div class="col-md-6 text-left">';
                             print "Numero Tracking: <h5 style='display: inline-block'>" . $_GET['tracking_id'] . "</h5><br>";
-                            print "Corriere: <h5 style='display: inline-block'>BRT</h5><br>";
-                            print "Stato della Spedizione: <h5 style='display: inline-block'>Spedito</h5><br><br>";
-                            print "Dettagli: <h5>La spedizione è stata assegnata al corriere.</h5><br>";
-
-                            print '</div>';
-                        }
-                        ?>
-                    </div>
-
-                    <div class="row row_style">
-                        <?php
-                        if (isset($_GET['order_id']) && isset($_GET['tracking_id'])) {
-                            print "<div class='col-md-6 mb-5'>";
-                            print "<h4 class='mb-5'>Modifca Tracking</h4>";
-                            print "<form action='' method='post'>
-                                        <div class='form-group'>
-                                            <input type='text' name='update_tracking' class='form-control tracking_id' placeholder='Nuovo Tracking ID'>
-                                        </div>
-                                        <div class='form-group'>
-                                            <input type='submit' class='btn btn-primary' value='Aggiorna'>
-                                        </div>
-                                      </form>";
+                            print "Corriere: <h5 style='display: inline-block'>" . $obj->courier . "</h5><br>";
+                            print "Stato della Spedizione: <h5 style='display: inline-block'>" . $obj->title . "</h5><br><br>";
+                            print "Dettagli: <h5>" . $obj->description . "</h5><br>";
                             print "</div>";
-                        }
-                        ?>
+                            print "</div>";
 
-                        <?php
-                        if (isset($_GET['order_id']) && isset($_GET['tracking_id'])) {
-                            print "<div class='col-md-6 mb-5'>";
+                            print "<div class='col-md-12 mb-5'>";
                             print "<h4 class='mb-5'>Elimina Tracking</h4>";
-                            print "<form action='' method='post'>
-                                        <div class='form-group'>
-                                            <input type='submit' class='btn btn-primary' value='Elimina'>
-                                            <br>(Azione non reversibile)
-                                        </div>
-                                      </form>";
+                            $url = "http://localhost/track-order-saed/public/delete_tracking.php?id=" . $_GET['tracking_id'];
+                            print "<a href='$url'><input type='submit' class='btn btn-primary' value='Elimina'></a>";
+                            print "<br>(Azione non reversibile)";
+                            print "</div>";
                             print "</div>";
                         }
-                        ?>
-                    </div>
+                    }
+                    ?>
                 </div>
         </main>
 
