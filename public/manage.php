@@ -64,25 +64,45 @@ require_once "utils.php";
                     if (isset($_GET['order_id']) && !isset($_GET['tracking_id'])) {
                         print "<div class='row'>";
 
-                        print "<div class='col-md-12 mb-5'>";
+                        print "<div class='col-md-6 mb-5'>";
                         print "<h4 class='mb-5'>Crea Nuovo Tracking</h4>";
                         print "<form action='' method='post'>
-                                   <div class='form-group'>";
-                        print "<input type='text' name='create_tracking' class='form-control tracking_id' placeholder='Tracking ID'>";
+                                   <div class='form-group'>
+                                   <div class='bootstrap-select-wrapper'>
+                                   <label>Corriere</label><br>
+                                      <select class='custom-select custom-select-sm tracking_id' title='Scegli un Corriere'>
+                                        <option value='BRT'>BRT</option>
+                                        <option value='SDA'>SDA</option>
+                                        <option value='GLS'>GLS</option>
+                                        <option value='DHL'>DHL</option>
+                                      </select>
+                                      </div>";
+                        print "<br><label>Tracking ID</label><input type='text' name='create_tracking' class='form-control tracking_id' placeholder='ID'>";
+                        print "";
                         print "<br><input type='submit' class='btn btn-primary' value='Crea' style='width:30%;'>
                                    </div>
                                    </form>";
                         print "</div>";
 
-                        print "<div class='col-md-12 mb-5'>";
+                        print "<div class='col-md-6 mb-5'>";
                         print "<h4 class='mb-5'>Associa Tracking Esistente</h4>";
                         print "<form action='' method='post'>
                                         <div class='form-group'>";
                         //foreach () {
                         print "<input name='gruppo1' type='radio' id='radio1'>
-                                       <label for='radio1'>12345</label><br>
-                                       <input name='gruppo1' type='radio' id='radio2'>
-                                       <label for='radio2'>12345</label>";
+                               <label for='radio1'>12345</label><br>
+                               <input name='gruppo1' type='radio' id='radio2'>
+                               <label for='radio2'>12345</label><br>
+                               <input name='gruppo1' type='radio' id='radio3'>
+                               <label for='radio3'>12345</label><br>
+                               <input name='gruppo1' type='radio' id='radio4'>
+                               <label for='radio4'>12345</label><br>
+                               <input name='gruppo1' type='radio' id='radio5'>
+                               <label for='radio5'>12345</label><br>
+                               <input name='gruppo1' type='radio' id='radio6'>
+                               <label for='radio6'>12345</label><br>
+                               <input name='gruppo1' type='radio' id='radio7'>
+                               <label for='radio7'>12345</label><br>";
 
                         //}
                         print "<br><br><input type='submit' class='btn btn-primary' value='Associa' style='width:30%;'>
