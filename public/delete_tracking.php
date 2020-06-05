@@ -13,6 +13,7 @@ if ($_SESSION['type'] == 'user') {
 }
 
 require_once "utils.php";
+require_once "../database/connection.php";
 
 ?>
 
@@ -45,17 +46,34 @@ require_once "utils.php";
         </header>
 
         <main role="main" class="inner cover">
-            <?php
-            if (isset($_GET['id']) && !empty($_GET['id'])) {
-                $data = array(
-                    "id" => $_GET['id']
-                );
-                $url = "http://localhost/track-order-saed/api/tracking/delete.php";
-                $arr = json_decode(curl_api("POST", $url, $data));
-                print "<h5>" . $arr->message . "</h5>";
-            }
-            ?>
-            <a href="admin.php" class="btn btn-primary">Torna alla dashboard</a>
+            <!-- DECIDERE SE LASCIARE HEADER, POSIZIONARE MEGLIO MESSAGGIO E BOTTONE -->
+            <div class='col-md-12 mb-5'>
+                <?php
+                if (isset($_POST['tracking_id']) && isset($_POST['order_id'])) {
+                    if (!empty($_POST['tracking_id']) && !empty($_POST['order_id'])) {
+                        $data = array(
+                            "id" => $_POST['tracking_id']
+                        );
+                        $url = "http://localhost/track-order-saed/api/tracking/delete.php";
+                        $arr = json_decode(curl_api("POST", $url, $data));
+                        print "<h5>" . $arr->message . "</h5>";
+                        if ($arr->message == "Tracking eliminato.") {
+                            $db = new Database();
+                            $conn = $db->openConnection();
+                            $sql = "UPDATE orders SET tracking_id=NULL WHERE id=:order_id";
+                            $stmt = $conn->prepare($sql);
+                            $data = array("order_id" => $_POST['order_id']);
+                            $stmt->execute($data);
+                        }
+                    } else {
+                        print "<h5>Impossibile eseguire l'operazione richiesta.</h5>";
+                    }
+                } else {
+                    print "<h5>Impossibile eseguire l'operazione richiesta.</h5>";
+                }
+                ?>
+                <a href="admin.php" class="btn btn-primary">Torna alla dashboard</a>
+            </div>
         </main>
 
         <footer class="mastfoot mt-auto">

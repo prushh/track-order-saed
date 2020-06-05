@@ -98,43 +98,53 @@ require_once "utils.php";
                     if (isset($_GET['order_id']) && isset($_GET['tracking_id'])) {
 
                         $arr = json_decode(curl_api("GET", "http://localhost/track-order-saed/api/tracking/get.php?tracking_id=" . $_GET['tracking_id']));
-                        $obj = $arr->results[0];
+                        if (isset($arr->results[0])) {
+                            $obj = $arr->results[0];
+                            if (isset($arr->message)) {
+                                print $arr->message;
+                            } else {
+                                print "<div class='row row_style'>";
+                                print "<div class='col-md-6'>";
+                                switch ($obj->courier) {
+                                    case "BRT":
+                                        print "<img src='img/brt.png' width='250px'>";
+                                        break;
+                                    case "DHL":
+                                        print "<img src='img/dhl.png' width='350px'>";
+                                        break;
+                                    case "SDA":
+                                        print "<img src='img/sda.png' width='350px'>";
+                                        break;
+                                    case "GLS":
+                                        print "<img src='img/gls.png' width='230px'>";
+                                        break;
+                                }
+                                print "</div>";
+                                print '<div class="col-md-6 text-left">';
+                                print "Numero Tracking: <h5 style='display: inline-block'>" . $_GET['tracking_id'] . "</h5><br>";
+                                print "Corriere: <h5 style='display: inline-block'>" . $obj->courier . "</h5><br>";
+                                print "Stato della Spedizione: <h5 style='display: inline-block'>" . $obj->title . "</h5><br><br>";
+                                print "Dettagli: <h5>" . $obj->description . "</h5><br>";
+                                print "</div>";
+                                print "</div>";
 
-                        if (isset($arr->message)) {
-                            print $arr->message;
-                        } else {
-                            print "<div class='row row_style'>";
-                            print "<div class='col-md-6'>";
-                            switch ($obj->courier) {
-                                case "BRT":
-                                    print "<img src='img/brt.png' width='250px'>";
-                                    break;
-                                case "DHL":
-                                    print "<img src='img/dhl.png' width='350px'>";
-                                    break;
-                                case "SDA":
-                                    print "<img src='img/sda.png' width='350px'>";
-                                    break;
-                                case "GLS":
-                                    print "<img src='img/gls.png' width='230px'>";
-                                    break;
+                                // DA POSIZIONARE MEGLIO
+                                print "<div class='col-md-12 mb-5'>";
+                                print "<h4 class='mb-5'>Elimina Tracking</h4>";
+                                print "<form action='delete_tracking.php' method='post'>";
+                                print "<div class='form-group'>";
+                                print "<input type='hidden' name='order_id' value=" . $_GET['order_id'] . ">";
+                                print "<input type='hidden' name='tracking_id' value=" . $_GET['tracking_id'] . ">";
+                                print "<input type='submit' class='btn btn-primary' value='Elimina'>";
+                                print "<br>(Azione non reversibile)";
+                                print "</div>";
+                                print "</form>";
                             }
-                            print "</div>";
-                            print '<div class="col-md-6 text-left">';
-                            print "Numero Tracking: <h5 style='display: inline-block'>" . $_GET['tracking_id'] . "</h5><br>";
-                            print "Corriere: <h5 style='display: inline-block'>" . $obj->courier . "</h5><br>";
-                            print "Stato della Spedizione: <h5 style='display: inline-block'>" . $obj->title . "</h5><br><br>";
-                            print "Dettagli: <h5>" . $obj->description . "</h5><br>";
-                            print "</div>";
-                            print "</div>";
-
-                            print "<div class='col-md-12 mb-5'>";
-                            print "<h4 class='mb-5'>Elimina Tracking</h4>";
-                            $url = "http://localhost/track-order-saed/public/delete_tracking.php?id=" . $_GET['tracking_id'];
-                            print "<a href='$url'><input type='submit' class='btn btn-primary' value='Elimina'></a>";
-                            print "<br>(Azione non reversibile)";
-                            print "</div>";
-                            print "</div>";
+                        } else {
+                            // DA CENTRARE VERTICALMENTE
+                            print "<h5>Nessuna informazione su questo tracking.</h5>";
+                            print "<br>";
+                            print "<a href='admin.php' class='btn btn-primary'>Torna alla dashboard</a>";
                         }
                     }
                     ?>
