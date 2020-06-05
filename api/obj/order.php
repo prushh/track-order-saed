@@ -59,7 +59,8 @@ class Order
     /* GET all orders with user information */
     public function get_all_with_user_info()
     {
-        $query = "SELECT *
+        $query = "SELECT orders.id, n_items, total_cost, order_date, ship_date, delivery_date,
+                         user_id, tracking_id, name, surname, email, address
                   FROM " . $this->table_name . " INNER JOIN users ON user_id = users.id;";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
