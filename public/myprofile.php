@@ -33,33 +33,53 @@ if ($_SESSION['type'] == 'admin') {
 <body class="text-center">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
-        <nav class="navbar navbar-dark bg-dark">
+        <nav class="navbar navbar-dark bg-dark mb-5">
             <a class="navbar-brand" href="index.php">
                 <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                 <span class="login_title">T</span>racking <span class="login_title">T</span>ool
             </a>
-            <a href="logout.php" class="navbar-brand pull-right">Logout</a>
+            <a href="logout.php" class="navbar-brand pull-right"><?php echo htmlspecialchars($_SESSION['name']); ?> Logout</a>
         </nav>
-
-        <!-- Decidere se togliere header-->
-        <header class="masthead mb-auto">
-            <div class="inner">
-                <a class="home_logo" href="index.php">
-                    <img src="img/logo.png" alt="">
-                </a>
-                <h2>
-                    <span class="login_title">T</span>racking <span class="login_title">T</span>ool
-                </h2>
-            </div>
-        </header>
 
         <main role="main" class="inner cover">
             <div class="wrapper">
                 <div class="page-header">
-                    <h1>Benvenuto
-                        <b><?php echo htmlspecialchars($_SESSION['name']); ?></b>
-                    </h1>
+                    <h5>Benvenuto <b><?php echo htmlspecialchars($_SESSION['name']); ?></b>, questo è lo storico dei tuoi ordini:</h5>
                 </div>
+                <?php
+                $arr = json_decode(curl_api("GET", "http://localhost/track-order-saed/api/order/get.php?token=1"));
+
+                if (isset($arr->message)) {
+                    print $arr->message;
+                } else {
+                    print "<table class='table'>";
+                    print "<table class='table table-dark'>";
+                    print "<thead>";
+                    print "<tr>";
+                    print "<th scope='col'>Ordine</th>";
+                    print "<th>Effettuato il</th>";
+                    print "<th>Totale</th>";
+                    print "<th></th>";
+                    print "</tr>";
+                    print "</thead>";
+                    print "<tbody>";
+
+                    $link = '';
+
+                    foreach ($arr->results as $key => $obj) {
+                        print "<tr>";
+                        print "<th scope='row'>" . $obj->id . "</th>";
+                        print "<td>" . $obj->order_date . "</td>";
+                        print "<td>€ " . number_format($obj->total_cost, 2) . "</td>";
+                        print "<td><a href='$link' class='btn btn-primary'>Dettagli</a></td>";
+                        print "<tr>";
+                    }
+                    print "</tbody>";
+                    print "</table></table>";
+                }
+
+                ?>
+            </div>
         </main>
 
         <footer class="mastfoot mt-auto">

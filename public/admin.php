@@ -40,12 +40,11 @@ require_once "utils.php";
                 <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                 <span class="login_title">T</span>racking <span class="login_title">T</span>ool
             </a>
-            <a href="logout.php" class="navbar-brand pull-right">Logout</a>
+            <a href="logout.php" class="navbar-brand pull-right">Admin Logout</a>
         </nav>
 
         <main role="main" class="inner cover">
             <div class="wrapper">
-
                 <div class="page-header">
                     <h1>Dashboard
                         <b><?php echo htmlspecialchars($_SESSION['name']); ?></b>
