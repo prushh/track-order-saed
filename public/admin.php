@@ -51,8 +51,8 @@ require_once "utils.php";
                     </h1>
                 </div>
                 <?php
-                $arr = json_decode(curl_api("GET", "http://localhost/track-order-saed/api/order/get.php?token=1"));
-
+                $url = $ROOT_API . "order/get.php?token=1";
+                $arr = json_decode(curl_api("GET", $url));
                 if (isset($arr->message)) {
                     print $arr->message;
                 } else {
