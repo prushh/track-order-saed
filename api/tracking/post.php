@@ -22,11 +22,9 @@ $tracking = new Tracking($conn);
 $data = json_decode(file_get_contents("php://input"));
 
 if (
-    !empty($data->id) &&
     !empty($data->courier) &&
     !empty($data->status_id)
 ) {
-    $tracking->id = $data->id;
     $tracking->courier = $data->courier;
     $tracking->status_id = $data->status_id;
 
