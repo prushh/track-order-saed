@@ -76,8 +76,8 @@ require_once "utils.php";
                                         <option value='GLS'>GLS</option>
                                         <option value='DHL'>DHL</option>
                                       </select>
-                                      </div>";
-                        print "<br><label>Tracking ID</label><input type='text' name='tracking_id' class='form-control tracking_id' placeholder='ID'>";
+                                      </div>";              
+                        print "<input type='hidden' name='order_id' value=" . $_GET['order_id'] . ">";
                         print "";
                         print "<br><input type='submit' class='btn btn-primary' value='Crea' style='width:30%;'>
                                    </div>
