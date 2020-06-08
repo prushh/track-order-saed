@@ -2,10 +2,11 @@
 // Initialize session
 session_start();
 
+// DA RIVEDERE FUNZIONAMENTO PARTE USER
 if (isset($_SESSION['logged']) && $_SESSION['logged']) {
     if ($_SESSION['type'] == 'admin') {
         header('Location: admin.php', true, 307);
-    } elseif ($_SESSION['type'] == 'user') {
+    } else if ($_SESSION['type'] == 'user') {
         header('Location: myprofile.php', true, 307);
     }
     exit(0);

@@ -12,6 +12,8 @@ if ($_SESSION['type'] == 'admin') {
     exit(0);
 }
 
+require_once "utils.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -47,36 +49,41 @@ if ($_SESSION['type'] == 'admin') {
                     <h5>Benvenuto <b><?php echo htmlspecialchars($_SESSION['name']); ?></b>, questo è lo storico dei tuoi ordini:</h5>
                 </div>
                 <?php
-                $arr = json_decode(curl_api("GET", "http://localhost/track-order-saed/api/order/get.php?token=1"));
+                $url = $ROOT_API . "order/get.php?user_id=" . $_SESSION['id'];
+                $arr = json_decode(curl_api("GET", $url));
 
+                print "<table class='table'>";
+                print "<table class='table table-dark'>";
+                print "<thead>";
+                print "<tr>";
+                print "<th scope='col'>Ordine</th>";
+                print "<th>Effettuato il</th>";
+                print "<th>Totale</th>";
+                print "<th></th>";
+                print "</tr>";
+                print "</thead>";
+                print "<tbody>";
                 if (isset($arr->message)) {
-                    print $arr->message;
+                    // RIVEDERE COME MOSTRARE MESSAGGIO
+                    print "<tr><td colspan='4'><h5>" . $arr->message . "</h5></td></tr>";
                 } else {
-                    print "<table class='table'>";
-                    print "<table class='table table-dark'>";
-                    print "<thead>";
-                    print "<tr>";
-                    print "<th scope='col'>Ordine</th>";
-                    print "<th>Effettuato il</th>";
-                    print "<th>Totale</th>";
-                    print "<th></th>";
-                    print "</tr>";
-                    print "</thead>";
-                    print "<tbody>";
-
-                    $link = '';
-
+                    $num_orders = sizeof($arr->results);
+                    if ($num_orders == 0) {
+                        print "<tr colspan='4'>";
+                        print "<th>" . $arr->message . "</th>";
+                        print "<tr>";
+                    }
                     foreach ($arr->results as $key => $obj) {
                         print "<tr>";
                         print "<th scope='row'>" . $obj->id . "</th>";
                         print "<td>" . $obj->order_date . "</td>";
                         print "<td>€ " . number_format($obj->total_cost, 2) . "</td>";
-                        print "<td><a href='$link' class='btn btn-primary'>Dettagli</a></td>";
+                        print "<td><a href='details.php?order_id=" . $obj->id . "' class='btn btn-primary'>Dettagli</a></td>";
                         print "<tr>";
                     }
-                    print "</tbody>";
-                    print "</table></table>";
                 }
+                print "</tbody>";
+                print "</table></table>";
 
                 ?>
             </div>

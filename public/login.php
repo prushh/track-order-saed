@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
             $db = new Database();
             $conn = $db->openConnection();
-            $sql = "SELECT users.name, users.surname, users.email, users.password
+            $sql = "SELECT users.id, users.name, users.surname, users.email, users.password
                     FROM users
                     WHERE users.email = :email";
 
@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 if ($stmt->execute()) {
                     if ($stmt->rowCount() == 1) {
                         if ($row = $stmt->fetch()) {
+                            $id = $row['id'];
                             $name = $row['name'];
                             $surname = $row['surname'];
                             $email = $row['email'];
@@ -62,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                                     $_SESSION['type'] = 'admin';
                                     header('Location: admin.php', true, 302);
                                 } else {
+                                    $_SESSION['id'] = $id;
                                     $_SESSION['type'] = 'user';
                                     header('Location: myprofile.php', true, 302);
                                 }
