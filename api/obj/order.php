@@ -67,6 +67,17 @@ class Order
         return $stmt;
     }
 
+    /* GET order details by user_id */
+    public function get_by_user_id($order_id)
+    {
+        $query = "SELECT *
+                      FROM " . $this->table_name . "
+                      WHERE id = " . $order_id . ";";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+
     /* UPDATE tracking_id */
     public function update_tracking()
     {

@@ -32,6 +32,8 @@ if (isset($_GET['user_id']) && !isset($_GET['token'])) {
     } else {
         bad_request();
     }
+} else if (isset($_GET['order_id'])) {
+    $stmt = $order->get_by_user_id($_GET['order_id']);
 } else {
     $stmt = $order->get_all($conn);
 }
