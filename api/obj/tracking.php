@@ -38,6 +38,19 @@ class Tracking
         return $stmt;
     }
 
+    /* GET tracking not in orders */
+    public function get_track_no_orders()
+    {
+        $query = "SELECT *
+                  FROM " . $this->table_name . "
+                  WHERE id NOT IN (SELECT tracking_id
+                                   FROM orders WHERE tracking_id IS NOT NULL)";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+
     /* ADD one tracking */
     public function add()
     {

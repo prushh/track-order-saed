@@ -66,4 +66,22 @@ class Order
         $stmt->execute();
         return $stmt;
     }
+
+    /* UPDATE tracking_id */
+    public function update_tracking()
+    {
+        $query = "UPDATE " . $this->table_name . " SET tracking_id = :tracking_id WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->tracking_id = htmlspecialchars(strip_tags($this->tracking_id));
+        // binding parametri
+        $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(":tracking_id", $this->tracking_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }

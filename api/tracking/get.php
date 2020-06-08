@@ -24,6 +24,8 @@ if (isset($_GET['tracking_id'])) {
     } else {
         bad_request();
     }
+} else if (isset($_GET['no_orders'])) {
+    $stmt = $tracking->get_track_no_orders();
 } else {
     $stmt = $tracking->get_all();
 }
@@ -61,5 +63,5 @@ if ($stmt->rowCount() > 0) {
     print json_encode($tracking_arr);
 } else {
     http_response_code(404);
-    print json_encode(array("message" => "Nessun tracking trovato"));
+    print json_encode(array("message" => "Nessun tracking esistente"));
 }
