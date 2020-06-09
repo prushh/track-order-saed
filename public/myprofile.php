@@ -72,14 +72,15 @@ require_once "utils.php";
                         print "<tr colspan='4'>";
                         print "<th>" . $arr->message . "</th>";
                         print "<tr>";
-                    }
-                    foreach ($arr->results as $key => $obj) {
-                        print "<tr>";
-                        print "<th scope='row'>" . $obj->id . "</th>";
-                        print "<td>" . $obj->order_date . "</td>";
-                        print "<td>€ " . number_format($obj->total_cost, 2) . "</td>";
-                        print "<td><a href='details.php?order_id=" . $obj->id . "' class='btn btn-primary'>Dettagli</a></td>";
-                        print "<tr>";
+                    } else {
+                        foreach ($arr->results as $key => $obj) {
+                            print "<tr>";
+                            print "<th scope='row'>" . $obj->id . "</th>";
+                            print "<td>" . $obj->order_date . "</td>";
+                            print "<td>€ " . number_format($obj->total_cost, 2) . "</td>";
+                            print "<td><a href='details.php?order_id=" . $obj->id . "' class='btn btn-primary'>Dettagli</a></td>";
+                            print "<tr>";
+                        }
                     }
                 }
                 print "</tbody>";
