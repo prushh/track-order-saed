@@ -42,7 +42,7 @@ require_once "utils.php";
                 <span class="login_title">T</span>racking <span class="login_title">T</span>ool
             </a>
             <div class="dropdown">
-                <button class="btn dropdown-toggle" style="color: white;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn dropdown-toggle dropname" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?php echo htmlspecialchars($_SESSION['name']); ?>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
