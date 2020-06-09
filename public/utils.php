@@ -1,7 +1,7 @@
 <?php
 
 //* API PATH *//
-$ROOT_API = "http://localhost/track-order-saed/api/";
+$ROOT_API = "http://api-track-order.local/";
 
 // ** DEBUGGING ** //
 function _debug_log($var, $die = true)
