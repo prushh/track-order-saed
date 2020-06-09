@@ -44,18 +44,6 @@ class Order
         return $stmt;
     }
 
-    /* GET all orders with tracking_id by user_id */
-    public function get_all_with_track_by_user_id($user_id)
-    {
-        $query = "SELECT *
-                  FROM " . $this->table_name . "
-                  WHERE orders.user_id = " . $user_id . " AND
-                        orders.tracking_id IS NOT NULL;";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
-    }
-
     /* GET all orders with user information */
     public function get_all_with_user_info()
     {
