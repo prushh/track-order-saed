@@ -133,7 +133,7 @@ require_once "utils.php";
                                         "status_id" => $status_id
                                     );
                                     $url = $ROOT_API . "tracking/put.php";
-                                    $arr = json_decode(curl_api("POST", $url, $data));
+                                    $arr = json_decode(curl_api("PUT", $url, $data));
                                 }
 
                                 print "<div class='row row_style'>";

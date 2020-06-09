@@ -65,7 +65,7 @@ require_once "../database/connection.php";
                             "tracking_id" => $tracking_id
                         );
                         $url = $ROOT_API . "order/put.php";
-                        $arr = json_decode(curl_api("POST", $url, $data));
+                        $arr = json_decode(curl_api("PUT", $url, $data));
                         print "<h5>" . $arr->message . "</h5>";
                     } else {
                         print "<h5>Impossibile eseguire l'operazione richiesta.</h5>";
