@@ -76,7 +76,7 @@ require_once "utils.php";
                                         <option value='GLS'>GLS</option>
                                         <option value='DHL'>DHL</option>
                                       </select>
-                                      </div>";              
+                                      </div>";
                         print "<input type='hidden' name='order_id' value=" . $_GET['order_id'] . ">";
                         print "";
                         print "<br><input type='submit' class='btn btn-primary' value='Crea' style='width:30%;'>
@@ -119,6 +119,16 @@ require_once "utils.php";
                             if (isset($arr->message)) {
                                 print $arr->message;
                             } else {
+                                if ($obj->status_id < 5) {
+                                    $status_id = $obj->status_id + 1;
+                                    $data = array(
+                                        "id" => $_GET['tracking_id'],
+                                        "status_id" => $status_id
+                                    );
+                                    $url = $ROOT_API . "tracking/put.php";
+                                    $arr = json_decode(curl_api("POST", $url, $data));
+                                }
+
                                 print "<div class='row row_style'>";
                                 print "<div class='col-md-6'>";
                                 switch ($obj->courier) {
