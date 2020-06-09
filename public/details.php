@@ -56,7 +56,7 @@ require_once "utils.php";
                     ?>
                 </div>
 
-                <div class="container">
+                <div class="container details">
 
                 <?php
                 if (isset($_GET['order_id'])) {
@@ -83,21 +83,21 @@ require_once "utils.php";
                             $arr_track = json_decode(curl_api("GET", $url));
                             $obj_track = $arr_track->results[0];
                             print "<tr><td>Spedito il:</td><td><h5>" . $obj_order->ship_date . "</h5></td></tr>";
-                            print "<tr><td>Consegnato il:</td><td><h5>" . $obj_order->delivery_date . "</h5></td></tr>";
+                            if($obj_order->tracking_id == 5){
+                                print "<tr><td>Consegnato il:</td><td><h5>" . $obj_order->delivery_date . "</h5></td></tr>";
+                            }
                             print "<tr><td>Tracking ID:</td><td><h5>" . $obj_order->tracking_id . "</h5></td></tr>";
                             print "<tr><td>Corriere:</td><td><h5>" . $obj_track->courier . "</h5></td></tr>";
                             print "<tr><td>Stato Spedizione:</td><td><h5>" . $obj_track->title . "</h5></td></tr>";
                         }
                         print "</tbody>";
                         print "</table>";
-
-
                     } else {
                         // DA CENTRARE VERTICALMENTE, ANCHE BUTTON
                         print "<h5>Nessuna informazione su questo ordine.</h5>";
                     }
                     print "<br>";
-                    print "<a href='myprofile.php' class='btn btn-primary'>Torna alla Home</a>";
+                    print "<a href='myprofile.php' style='margin: 0 auto;' class='btn btn-primary'>Torna alla Home</a>";
                 }
 
                 ?>
