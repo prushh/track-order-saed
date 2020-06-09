@@ -84,7 +84,7 @@ require_once "utils.php";
                         print "<tbody>";
                         print "<tr><td>ID Ordine:</td><td><h5>" . $obj_order->id . "</h5></td></tr>";
                         print "<tr><td>Numero Articoli:</td><td><h5>" . $obj_order->n_items . "</h5></td></tr>";
-                        print "<tr><td>Totale Ordine:</td><td><h5>" . $obj_order->total_cost . "</h5></td></tr>";
+                        print "<tr><td>Totale Ordine:</td><td><h5>€ " . $obj_order->total_cost . "</h5></td></tr>";
                         print "<tr><td>Effettuato il:</td><td><h5>" . $obj_order->order_date . "</h5></td></tr>";
                         if ($obj_order->tracking_id != NULL) {
                             $url = $ROOT_API . "tracking/get.php?tracking_id=" . $obj_order->tracking_id;
