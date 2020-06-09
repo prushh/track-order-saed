@@ -85,4 +85,22 @@ class Tracking
         }
         return false;
     }
+
+    /* UPDATE status_id */
+    public function update_status()
+    {
+        $query = "UPDATE " . $this->table_name . " SET status_id = :status_id WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->tracking_id = htmlspecialchars(strip_tags($this->status_id));
+        // binding parametri
+        $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(":status_id", $this->tracking_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }
