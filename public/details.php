@@ -41,7 +41,6 @@ require_once "utils.php";
                 <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                 <span class="login_title">T</span>racking <span class="login_title">T</span>ool
             </a>
-            <a href="logout.php" class="navbar-brand pull-right"><?php echo htmlspecialchars($_SESSION['name']); ?> Logout</a>
         </nav>
 
         <main role="main" class="inner cover">
@@ -58,43 +57,50 @@ require_once "utils.php";
                 </div>
 
                 <div class="container">
-                    <?php
-                    if (isset($_GET['order_id'])) {
-                        $url = $ROOT_API . "order/get.php?order_id=" . $_GET['order_id'];
-                        $arr_order = json_decode(curl_api("GET", $url));
 
-                        $user_id = NULL;
+                <?php
+                if (isset($_GET['order_id'])) {
+                    $url = $ROOT_API . "order/get.php?order_id=" . $_GET['order_id'];
+                    $arr_order = json_decode(curl_api("GET", $url));
 
-                        if (isset($arr_order->message)) {
-                            print "<h5>" . $arr_order->message . "</h5>";
-                        } else if (isset($arr_order->results[0])) {
-                            $obj_order = $arr_order->results[0];
-                            $user_id = $obj_order->user_id;
+                    $user_id = NULL;
 
-                            print "<div class='col-md-12 text-center'>";
-                            print "ID Ordine: <h5>" . $obj_order->id . "</h5>";
-                            print "Numero Articoli: <h5>" . $obj_order->n_items . "</h5>";
-                            print "Totale Ordine: <h5>" . $obj_order->total_cost . "</h5>";
-                            print "Effettuato il: <h5>" . $obj_order->order_date . "</h5>";
-                            if ($obj_order->tracking_id != NULL) {
-                                $url = $ROOT_API . "tracking/get.php?tracking_id=" . $obj_order->tracking_id;
-                                $arr_track = json_decode(curl_api("GET", $url));
-                                $obj_track = $arr_track->results[0];
+                    if (isset($arr_order->message)) {
+                        print "<h5>" . $arr_order->message . "</h5>";
+                    } else if (isset($arr_order->results[0])) {
+                        $obj_order = $arr_order->results[0];
+                        $user_id = $obj_order->user_id;
 
-                                print "Spedito il: <h5>" . $obj_order->ship_date . "</h5>";
-                                print "Consegnato il: <h5>" . $obj_order->delivery_date . "</h5>";
-                                print "Tracking ID: <h5>" . $obj_order->tracking_id . "</h5>";
-                                print "Corriere: <h5>" . $obj_track->courier . "</h5>";
-                                print "Stato Spedizione: <h5>" . $obj_track->title . "</h5><br>";
-                            }
-                        } else {
-                            // DA CENTRARE VERTICALMENTE, ANCHE BUTTON
-                            print "<h5>Nessuna informazione su questo ordine.</h5>";
+                        print "<table class='table'>";
+                        print "<table class='table table-dark'>";
+                        print "<tbody>";
+                        print "<tr><td>ID Ordine:</td><td><h5>" . $obj_order->id . "</h5></td></tr>";
+                        print "<tr><td>Numero Articoli:</td><td><h5>" . $obj_order->n_items . "</h5></td></tr>";
+                        print "<tr><td>Totale Ordine:</td><td><h5>" . $obj_order->total_cost . "</h5></td></tr>";
+                        print "<tr><td>Effettuato il:</td><td><h5>" . $obj_order->order_date . "</h5></td></tr>";
+                        if ($obj_order->tracking_id != NULL) {
+                            $url = $ROOT_API . "tracking/get.php?tracking_id=" . $obj_order->tracking_id;
+                            $arr_track = json_decode(curl_api("GET", $url));
+                            $obj_track = $arr_track->results[0];
+                            print "<tr><td>Spedito il:</td><td><h5>" . $obj_order->ship_date . "</h5></td></tr>";
+                            print "<tr><td>Consegnato il:</td><td><h5>" . $obj_order->delivery_date . "</h5></td></tr>";
+                            print "<tr><td>Tracking ID:</td><td><h5>" . $obj_order->tracking_id . "</h5></td></tr>";
+                            print "<tr><td>Corriere:</td><td><h5>" . $obj_track->courier . "</h5></td></tr>";
+                            print "<tr><td>Stato Spedizione:</td><td><h5>" . $obj_track->title . "</h5></td></tr>";
                         }
-                        print "<br>";
-                        print "<a href='myprofile.php' class='btn btn-primary'>Torna alla Home</a>";
+                        print "</tbody>";
+                        print "</table>";
+
+
+                    } else {
+                        // DA CENTRARE VERTICALMENTE, ANCHE BUTTON
+                        print "<h5>Nessuna informazione su questo ordine.</h5>";
                     }
-                    ?>
+                    print "<br>";
+                    print "<a href='myprofile.php' class='btn btn-primary'>Torna alla Home</a>";
+                }
+
+                ?>
 
                 </div>
 

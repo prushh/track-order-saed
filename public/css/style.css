@@ -73,3 +73,17 @@ body {
     width: 30%;
     margin: 0 auto;
 }
+
+.navname{
+    color:dodgerblue;
+    position: absolute;
+    right: 100px;
+}
+.dropdown-menu{
+    min-width: 6rem !important;
+    width: 100% !important;
+    text-align: center;
+}
+.dropdown-item{
+    padding: 0 !important;
+}

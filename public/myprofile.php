@@ -40,7 +40,14 @@ require_once "utils.php";
                 <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                 <span class="login_title">T</span>racking <span class="login_title">T</span>ool
             </a>
-            <a href="logout.php" class="navbar-brand pull-right"><?php echo htmlspecialchars($_SESSION['name']); ?> Logout</a>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?php echo htmlspecialchars($_SESSION['name']); ?>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="logout.php">Logout</a>
+                </div>
+            </div>
         </nav>
 
         <main role="main" class="inner cover">
@@ -84,7 +91,7 @@ require_once "utils.php";
                     }
                 }
                 print "</tbody>";
-                print "</table></table>";
+                print "</table>";
 
                 ?>
             </div>
