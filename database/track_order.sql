@@ -57,7 +57,6 @@ INSERT INTO status VALUES (default, 'Spedito', 'La spedizione è stata assegnata
 INSERT INTO status VALUES (default, 'In transito', 'Arrivato presso la sede di consegna.');
 INSERT INTO status VALUES (default, 'In consegna', 'Il corriere consegnerà il pacco entro la giornata odierna.');
 INSERT INTO status VALUES (default, 'Consegnato', 'Il pacco è stato consegnato correttamente.');
-INSERT INTO status VALUES (default, 'Mancata consegna', 'Destinatario non presente nella sede di destinazione.');
 
 /* Insert trackings table*/
 INSERT INTO trackings VALUES (default, 'BRT', 1);
