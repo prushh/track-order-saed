@@ -21,7 +21,27 @@ $order = new Order($conn);
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (!empty($data->id) && !empty($data->tracking_id)) {
+if (
+    !empty($data->id) &&
+    !empty($data->n_items) &&
+    !empty($data->total_cost) &&
+    !empty($data->order_date) &&
+    !empty($data->user_id)
+) {
+    $order->id = $data->id;
+    $order->n_items = $data->n_items;
+    $order->total_cost = $data->total_cost;
+    $order->order_date = $data->order_date;
+    $order->user_id = $data->user_id;
+
+    if ($order->update()) {
+        http_response_code(200);
+        echo json_encode(array("message" => "Ordine aggiornato con successo."));
+    } else {
+        http_response_code(503);
+        echo json_encode(array("message" => "Ordine inesistente o protetto."));
+    }
+} else if (!empty($data->id) && !empty($data->tracking_id)) {
     $order->id = $data->id;
     $order->tracking_id = $data->tracking_id;
 

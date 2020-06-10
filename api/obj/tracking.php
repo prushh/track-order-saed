@@ -51,6 +51,45 @@ class Tracking
         return $stmt;
     }
 
+    /* UPDATE status_id */
+    public function update_status()
+    {
+        $query = "UPDATE " . $this->table_name . " SET status_id = :status_id WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->status_id = htmlspecialchars(strip_tags($this->status_id));
+        // binding parametri
+        $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(":status_id", $this->status_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    /* UPDATE tracking */
+    public function update()
+    {
+        $query = "UPDATE " . $this->table_name . " SET courier = :courier, status_id = :status_id 
+                  WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->courier = htmlspecialchars(strip_tags($this->courier));
+        $this->status_id = htmlspecialchars(strip_tags($this->status_id));
+        // binding parametri
+        $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(":courier", $this->courier, PDO::PARAM_STR, 3);
+        $stmt->bindParam(":status_id", $this->status_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
     /* ADD one tracking */
     public function add()
     {
@@ -82,24 +121,6 @@ class Tracking
             if ($stmt->rowCount() > 0) {
                 return true;
             }
-        }
-        return false;
-    }
-
-    /* UPDATE status_id */
-    public function update_status()
-    {
-        $query = "UPDATE " . $this->table_name . " SET status_id = :status_id WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
-        // sanitize
-        $this->id = htmlspecialchars(strip_tags($this->id));
-        $this->tracking_id = htmlspecialchars(strip_tags($this->status_id));
-        // binding parametri
-        $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-        $stmt->bindParam(":status_id", $this->tracking_id, PDO::PARAM_INT);
-
-        if ($stmt->execute()) {
-            return true;
         }
         return false;
     }

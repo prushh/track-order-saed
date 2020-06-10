@@ -21,7 +21,19 @@ $tracking = new Tracking($conn);
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (!empty($data->id) && !empty($data->status_id)) {
+if (!empty($data->id) && !empty($data->courier) && !empty($data->status_id)) {
+    $tracking->id = $data->id;
+    $tracking->courier = $data->courier;
+    $tracking->status_id = $data->status_id;
+
+    if ($tracking->update()) {
+        http_response_code(200);
+        echo json_encode(array("message" => "Tracking aggiornato con successo."));
+    } else {
+        http_response_code(503);
+        echo json_encode(array("message" => "Tracking inesistente o protetto."));
+    }
+} else if (!empty($data->id) && !empty($data->status_id)) {
     $tracking->id = $data->id;
     $tracking->status_id = $data->status_id;
 

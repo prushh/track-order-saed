@@ -84,6 +84,34 @@ class Order
         return false;
     }
 
+    /* UPDATE order */
+    public function update()
+    {
+        $query = "UPDATE " . $this->table_name . "
+                  SET n_items = :n_items, total_cost = :total_cost,
+                      order_date = :order_date, user_id = :user_id 
+                  WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->n_items = htmlspecialchars(strip_tags($this->n_items));
+        $this->total_cost = htmlspecialchars(strip_tags($this->total_cost));
+        $this->order_date = htmlspecialchars(strip_tags($this->order_date));
+        $this->user_id = htmlspecialchars(strip_tags($this->user_id));
+        // binding parametri
+        $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(":n_items", $this->n_items, PDO::PARAM_INT);
+        $stmt->bindParam(":total_cost", $this->total_cost, PDO::PARAM_INT);
+        $date = date("Y-m-d", strtotime($this->order_date));
+        $stmt->bindParam(":order_date", $date, PDO::PARAM_STR);
+        $stmt->bindParam(":user_id", $this->user_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
     /* ADD one order */
     public function add()
     {
