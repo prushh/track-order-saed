@@ -83,4 +83,45 @@ class Order
         }
         return false;
     }
+
+    /* ADD one order */
+    public function add()
+    {
+        $query = "INSERT INTO " . $this->table_name . " (id, n_items, total_cost, order_date, user_id)
+                  VALUES (default, :n_items, :total_cost, :order_date, :user_id);";
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->n_items = htmlspecialchars(strip_tags($this->n_items));
+        $this->total_cost = htmlspecialchars(strip_tags($this->total_cost));
+        $this->order_date = htmlspecialchars(strip_tags($this->order_date));
+        $this->user_id = htmlspecialchars(strip_tags($this->user_id));
+        // binding parametri
+        $stmt->bindParam(":n_items", $this->n_items, PDO::PARAM_INT);
+        $stmt->bindParam(":total_cost", $this->total_cost, PDO::PARAM_INT);
+        $date = date("Y-m-d", strtotime($this->order_date));
+        $stmt->bindParam(":order_date", $date, PDO::PARAM_STR);
+        $stmt->bindParam(":user_id", $this->user_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    /* DELETE one order */
+    public function delete()
+    {
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        // binding parametri
+        $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+        if ($stmt->execute()) {
+            if ($stmt->rowCount() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

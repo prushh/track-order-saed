@@ -54,7 +54,7 @@ require_once "../database/connection.php";
                         "courier" => $_POST['courier'],
                         "status_id" => 1
                     );
-                    $url = $ROOT_API . "tracking/post.php";
+                    $url = $ROOT_API . "tracking/add.php";
                     $arr = json_decode(curl_api("POST", $url, $data));
                     if ($arr->message == "Tracking aggiunto.") {
                         $db = new Database();

@@ -64,6 +64,11 @@ INSERT INTO trackings VALUES (default, 'DHL', 2);
 INSERT INTO trackings VALUES (default, 'GLS', 3);
 INSERT INTO trackings VALUES (default, 'SDA', 4);
 INSERT INTO trackings VALUES (default, 'GLS', 5);
+INSERT INTO trackings VALUES (default, 'BRT', 1);
+INSERT INTO trackings VALUES (default, 'DHL', 2);
+INSERT INTO trackings VALUES (default, 'GLS', 3);
+INSERT INTO trackings VALUES (default, 'SDA', 4);
+INSERT INTO trackings VALUES (default, 'GLS', 5);
 
 /* Insert orders table */
 INSERT INTO orders(id, n_items, total_cost, order_date, user_id) VALUES (default, 1, 10.90, '2020-05-17', 2);

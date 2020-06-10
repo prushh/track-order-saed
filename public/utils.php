@@ -39,7 +39,6 @@ function curl_api($method, $url, $data = false)
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
             break;
         case "PUT":
-            //curl_setopt($curl, CURLOPT_PUT, 1);
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
             break;
