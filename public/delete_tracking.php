@@ -54,7 +54,7 @@ require_once "../database/connection.php";
                         $data = array(
                             "id" => $_POST['tracking_id']
                         );
-                        $url = "http://localhost/track-order-saed/api/tracking/delete.php";
+                        $url = $ROOT_API . "tracking/delete.php";
                         $arr = json_decode(curl_api("POST", $url, $data));
                         print "<h5>" . $arr->message . "</h5>";
                         if ($arr->message == "Tracking eliminato.") {
