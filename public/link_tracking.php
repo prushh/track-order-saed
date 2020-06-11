@@ -46,7 +46,6 @@ require_once "../database/connection.php";
         </header>
 
         <main role="main" class="inner cover">
-            <!-- DECIDERE SE LASCIARE HEADER, POSIZIONARE MEGLIO MESSAGGIO E BOTTONE -->
             <div class='col-md-12 mb-5'>
                 <?php
                 $order_id = $tracking_id = NULL;

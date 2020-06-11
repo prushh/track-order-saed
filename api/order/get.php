@@ -18,7 +18,6 @@ $order = new Order($conn);
 
 $stmt = NULL;
 
-// Pensare come gestire le query con più tabelle coinvolte
 if (isset($_GET['user_id']) && !isset($_GET['token'])) {
     if (!empty($_GET['user_id'])) {
         $stmt = $order->get_all_by_user_id($_GET['user_id']);

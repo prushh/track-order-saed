@@ -46,7 +46,6 @@ require_once "../database/connection.php";
         </header>
 
         <main role="main" class="inner cover">
-            <!-- DECIDERE SE LASCIARE HEADER, POSIZIONARE MEGLIO MESSAGGIO E BOTTONE -->
             <div class='col-md-12 mb-5'>
                 <?php
                 if (isset($_POST['tracking_id']) && isset($_POST['order_id'])) {

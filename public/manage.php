@@ -161,8 +161,6 @@ require_once "utils.php";
                                 print "</div>";
                                 print "</div>";
 
-                                // DA POSIZIONARE MEGLIO, DECIDERE SE VISUALIZZARE
-                                // BOTTONE ELIMINA SE L'ORDINE è STATO CONSEGNATO
                                 if ($obj->status_id != 5) {
                                     print "<div class='col-md-12 mb-5'>";
                                     print "<h4 class='mb-5'>Elimina Tracking</h4>";
@@ -177,7 +175,6 @@ require_once "utils.php";
                                 }
                             }
                         } else {
-                            // DA CENTRARE VERTICALMENTE
                             print "<h5>Nessuna informazione su questo tracking.</h5>";
                             print "<br>";
                             print "<a href='admin.php' class='btn btn-primary'>Torna alla dashboard</a>";

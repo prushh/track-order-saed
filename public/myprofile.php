@@ -71,7 +71,6 @@ require_once "utils.php";
                 print "</thead>";
                 print "<tbody>";
                 if (isset($arr->message)) {
-                    // RIVEDERE COME MOSTRARE MESSAGGIO
                     print "<tr><td colspan='4'><h5>" . $arr->message . "</h5></td></tr>";
                 } else {
                     $num_orders = sizeof($arr->results);

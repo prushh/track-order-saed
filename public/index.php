@@ -2,7 +2,6 @@
 // Initialize session
 session_start();
 
-// DA RIVEDERE FUNZIONAMENTO PARTE USER
 if (isset($_SESSION['logged']) && $_SESSION['logged']) {
     if ($_SESSION['type'] == 'admin') {
         header('Location: admin.php', true, 307);

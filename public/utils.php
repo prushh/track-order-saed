@@ -1,7 +1,7 @@
 <?php
 
 //* API PATH *//
-$ROOT_API = "http://localhost/track-order-saed/api/";
+$ROOT_API = "http://api-tracking-tool.local/";
 
 // ** DEBUGGING ** //
 function _debug_log($var, $die = true)
@@ -10,21 +10,6 @@ function _debug_log($var, $die = true)
     if ($die)
         die;
 }
-
-function _debug_echo($var, $die = true)
-{
-    echo $var . PHP_EOL;
-    if ($die)
-        die;
-}
-
-function _debug_dump($var, $die = true)
-{
-    var_dump($var);
-    if ($die)
-        die;
-}
-
 
 // ** CURL ** //
 function curl_api($method, $url, $data = false)
@@ -47,9 +32,7 @@ function curl_api($method, $url, $data = false)
                 $url = sprintf("%s?%s", $url, http_build_query($data));
     }
 
-    // Optional Authentication:
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 

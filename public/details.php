@@ -101,7 +101,6 @@ require_once "utils.php";
                             print "</tbody>";
                             print "</table>";
                         } else {
-                            // DA CENTRARE VERTICALMENTE, ANCHE BUTTON
                             print "<h5>Nessuna informazione su questo ordine.</h5>";
                         }
                         print "<br>";
