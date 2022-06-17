@@ -1,7 +1,7 @@
 <?php
 
 //* API PATH *//
-$ROOT_API = "http://api-tracking-tool.local/";
+$ROOT_API = "http://api/";
 
 // ** DEBUGGING ** //
 function _debug_log($var, $die = true)

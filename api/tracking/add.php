@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     bad_request();
 }
 
-require_once "../../database/connection.php";
+require_once "../database/connection.php";
 require_once '../obj/tracking.php';
 
 $db = new Database();
