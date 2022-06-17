@@ -3,10 +3,10 @@
 class Database
 {
     // Credentials
-    private $servername = 'localhost';
+    private $servername = 'db';
     private $db_name = 'track_order';
-    private $username = 'admin';
-    private $password = 'admin';
+    private $username = 'root';
+    private $password = 'example';
     public $conn;
 
     // Connection to db
@@ -14,7 +14,7 @@ class Database
     {
         try {
             $this->conn = null;
-            $dsn = "mysql:host=$this->servername;dbname=$this->db_name";
+            $dsn = "mysql:host=$this->servername;port=3306;dbname=$this->db_name";
             $options = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

@@ -13,8 +13,7 @@ if ($_SESSION['type'] == 'user') {
 }
 
 require_once "utils.php";
-require_once "../database/connection.php";
-
+require_once "database/connection.php";
 ?>
 
 <!DOCTYPE html>

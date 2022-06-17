@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'GET') {
     bad_request();
 }
 
-require_once "../../database/connection.php";
+require_once "../database/connection.php";
 require_once '../obj/order.php';
 
 $db = new Database();

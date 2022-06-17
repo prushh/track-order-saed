@@ -12,7 +12,7 @@ if (isset($_SESSION['logged']) && $_SESSION['logged']) {
     exit(0);
 }
 
-require_once "../database/connection.php";
+require_once "database/connection.php";
 require_once "utils.php";
 
 $email = $passowrd = "";
